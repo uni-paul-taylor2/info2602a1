@@ -10,4 +10,8 @@ def initialize():
   db.create_all()
   print('database initialized')
 
-  
+@app.cli.command("getRoot", help="returns root of website")
+def getRoot():
+  return "<h1>Poke API v1.0</h1>"
+
+#@app.cli.command("")
