@@ -8,10 +8,8 @@ from App import app
 def initialize():
   db.drop_all()
   db.create_all()
+  with open("pokemon.csv") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+      pass
   print('database initialized')
-
-@app.cli.command("getRoot", help="returns root of website")
-def getRoot():
-  return "<h1>Poke API v1.0</h1>"
-
-#@app.cli.command("")

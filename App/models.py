@@ -43,5 +43,6 @@ class Pokemon(db.Model):
   type1 = db.Column(db.String(64), nullable=False)
   type2 = db.Column(db.String(64), nullable=False)
   weight = db.Column(db.Float, nullable=False)
+  #def __init__(self,)
   def __repr__(self):
     return "{\n"+ f'\t"attack": {dumps(self.attack)},\n\t"defense": {dumps(self.defense)},\n\t"height": {dumps(self.height)},\n\t"hp": {dumps(self.hp)},\n\t"name": {dumps(self.name)},\n\t"pokemon_id": {dumps(self.pokemon_id)},\n\t"sp_attack": {dumps(self.sp_attack)},\n\t"sp_defense": {dumps(self.sp_defense)},\n\t"speed": {dumps(self.speed)},\n\t"type1": {dumps(self.type1)},\n\t"type2": {dumps(self.type2)},\n\t"weight": {dumps(self.weight)}' +"}"

@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uwidcit/info2602a1.git"
+    "url": "git+https://github.com/uni-paul-taylor2/info2602a1.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/uwidcit/info2602a1/issues"
+    "url": "https://github.com/uni-paul-taylor2/info2602a1/issues"
   },
-  "homepage": "https://github.com/uwidcit/info2602a1#readme",
+  "homepage": "https://github.com/uni-paul-taylor2/info2602a1#readme",
   "dependencies": {
     "newman": "^5.3.2"
   }
