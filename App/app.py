@@ -50,7 +50,7 @@ def sign_up():
   if existingUser or existingEmail:
     return dumps({"error":"username or email already exists"}, indent=4)
   if not request.json.username or not request.json.email or not request.json.password:
-    return untested_exception
+    return untested_exception, 401
   User(request.json.username, request.json.email, request.json.password)
   return dumps({"message":request.username+" created"}, indent=4)
 
