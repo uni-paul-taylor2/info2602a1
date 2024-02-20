@@ -1,4 +1,4 @@
-import os 
+import os, csv
 from json import dumps
 from flask import Flask, jsonify, request, Response
 from functools import wraps
@@ -31,15 +31,17 @@ from .models import db, User, UserPokemon, Pokemon
 
 # Configure Flask App
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'MySecretKey'
 app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
 app.config['JWT_REFRESH_COOKIE_NAME'] = 'refresh_token'
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_TOKEN_LOCATION"] = ["cookies", "headers"]
 app.config["JWT_COOKIE_SECURE"] = True
 app.config["JWT_SECRET_KEY"] = "super-secret"
 app.config["JWT_COOKIE_CSRF_PROTECT"] = False
+app.config['JWT_HEADER_TYPE'] = ""
+app.config['JWT_HEADER_NAME'] = "Cookie"
 
 
 # Initialize App 
@@ -52,6 +54,20 @@ jwt = JWTManager(app)
 @app.route('/', methods=['GET'])
 def index():
   return "<h1>Poke API v1.0</h1>", 200
+
+@app.route('/init', methods=['GET'])
+def initialize_db():
+  db.drop_all()
+  db.create_all()
+  with open("pokemon.csv") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+      db.session.add(Pokemon(
+        row["attack"],row["defense"],row["height_m"],row["hp"],row["name"],row["pokedex_number"],
+        row["sp_attack"],row["sp_defense"],row["speed"],row["type1"],row["type2"],row["weight_kg"]
+      ))
+    db.session.commit()
+  return jsonHeader(dumps({"message":"Database Initialized!"}, indent=4), 200)
 
 @app.route('/pokemon', methods=['GET'])
 def listPokemon():
@@ -138,4 +154,4 @@ def get_set_or_remove_my_pokemon(id):
 # ********** Routes STOP **************
 
 if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=8080, debug=True)
+  app.run(host='0.0.0.0', port=8080)
